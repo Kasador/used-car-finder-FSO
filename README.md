@@ -122,3 +122,20 @@ module.exports = {
 # ⚙️ Updates 
 
 ![Screenshot 2024-11-30 102732](https://github.com/user-attachments/assets/7fc0b20c-63ea-484f-869b-e3f0c44cf960)
+
+## New Update on _webpack.config.js_
+
+```javascript
+plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      inject: false,
+    }),
+  ],
+```
+
+This is needed due to the fact that it was running my scripts _twice_. One from the index.html script tag with bundle.js and the other with the _HtmlWebpackPlugin_ function. I fixed this by added _inject: false,_ to the plugins array.
+
+### Screenshots Below >>>
+![Screenshot 2024-11-30 122555](https://github.com/user-attachments/assets/21f2d8e6-1393-4baf-90ed-db2ac1074532)
+![Screenshot 2024-11-30 123834](https://github.com/user-attachments/assets/7ac24637-c5cd-4668-8501-48531cd5e37f)

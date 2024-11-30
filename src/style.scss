@@ -1,13 +1,29 @@
 /* REFERENCES >>>
   1) Variables
     a) https://sass-lang.com/documentation/variables/
+  2) Select Options + Form
+    a) https://stackoverflow.com/questions/10484053/change-select-list-option-background-colour-on-hover
+  3) remove default appearances
+    a) https://stackoverflow.com/questions/12297600/how-to-remove-default-chrome-style-for-select-input
+  4) change styles for the first child selected element using ::before
+    a) https://developer.mozilla.org/en-US/docs/Web/CSS/::before
+    b) https://www.w3schools.com/cssref/sel_before.php
+    c) https://stackoverflow.com/questions/74944964/how-do-i-put-static-text-in-a-select-element-in-html
+    d) https://css-tricks.com/how-to-add-text-in-borders-using-basic-html-elements/
+  5) font awesome in SCSS / offset normal CSS font awesome
+    a) https://docs.fontawesome.com/web/use-with/scss
+    b) https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path
+  6) Change SVG color using CSS 
+    a) https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
 */
 
+// @import './assets/fontawesome/scss/solid.scss';
+
 // color scheme >>> variables
-$seleted-color: #fa003f;  
-$accent-color: #888;
-$primary-color: #28282B;
-$secondary-color: #DDDDDD;
+$seleted-color: #68A4B2;      // light red/rose
+$accent-color: #999;          // lightgray
+$primary-color: #28282B;      // matte black
+$secondary-color: #f9f9f9;    // dirty white
 
 // background img variable for easy updates
 $background-img: './assets/bg.jpg';
@@ -17,10 +33,99 @@ $background-img: './assets/bg.jpg';
   margin: 0;
 }
 
+.verticalLine {
+  border-left: thick solid $accent-color;
+}
+
 body {
   background-image: url($background-img);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  text-align: left;
+  width: 800px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  color: $secondary-color;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+p {
+  color: $secondary-color;
+  opacity: 0.8;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+main section {
+  display: flex;
+  background-color: #f9f9f9;
+  padding: 50px;
+  width: 700px;
+  justify-content: space-between;
+  border: 1px solid $accent-color;
+  border-radius: 10px;
+}
+
+main section article {
+  justify-content: flex;
+  justify-content: start;
+  align-items: left;
+  flex-direction: column;
+}
+
+h2 {
+  color: $seleted-color;
+  font-size: 2.2rem;
+}
+
+label {
+  font-size: 0.8rem;
+  background: $secondary-color;
+  padding: 0px 8px;
+  position: relative;
+  top: 9px;
+  left: 8px;
+  color: $accent-color;
+}
+
+.arrow-down { // SVG arrow for dropdown
+  width: 15px;
+  position: absolute;
+  transform: translateX(120px) translateY(15px); // move and reposition, top or right/left props dont work with SVG?
+  fill: $accent-color;
+}
+
+select {
+  padding: 15px 35px;
+  width: 150px;
+  background-color: $secondary-color;
+  padding-left: 5px;
+  border: 2px solid $accent-color;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  color: $primary-color;
+  appearance: none; // general
+  -webkit-appearance: none; // safari / chrome
+  -moz-appearance: none; // firefox
+}
+
+select:focus, select:active {
+  // border-radius: none;
+  outline: none;
+  border-color: $seleted-color;
 }

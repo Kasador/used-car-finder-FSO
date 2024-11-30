@@ -1,6 +1,10 @@
 <!-- REFERENCES >>>
   1) html form + input boxes 
     a) https://www.w3schools.com/tags/tag_select.asp 
+  2) hr line - vertical
+    a) https://stackoverflow.com/questions/3148415/how-to-make-a-vertical-line-in-html
+  3) font awesome icons
+    a) https://fontawesome.com/
 -->
 
 <!DOCTYPE html>
@@ -9,6 +13,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Car Finder | PWA Module 1 | H. Shaw</title>
+  <script src="https://kit.fontawesome.com/a52fd06b60.js" crossorigin="anonymous"></script>
+  
 </head>
 <body>
   <header>
@@ -18,20 +24,24 @@
   <main> <!-- main container for sections and application -->
     <section> <!-- main section for the three(3) section, "Year", "Make", "Model" -->
       <article> <!-- year section -->
-        <h1>Year</h1>
+        <h2>Year</h2>
+        <div class="test">
         <label for="year">Year</label>
-
+        <br />
+        <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
         <select name="year" id="year">
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>
           <option value="mercedes">Mercedes</option>
           <option value="audi">Audi</option>
         </select>
+      </div>
       </article>
       <article> <!-- make section -->
-        <h1>Make</h1>
+        <h2>Make</h2>
         <label for="make">Make</label>
-
+        <br />
+        <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
         <select name="make" id="make">
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>
@@ -40,9 +50,10 @@
         </select>
       </article>
       <article> <!-- model section -->
-        <h1>Model</h1>
+        <h2>Model</h2>
         <label for="model">Model</label>
-
+        <br />
+        <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
         <select name="model" id="model">
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>

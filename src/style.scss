@@ -2,7 +2,15 @@
   1) Variables
     a) https://sass-lang.com/documentation/variables/
 */
-$text-color: #fa003f;  
+
+// color scheme >>> variables
+$seleted-color: #fa003f;  
+$accent-color: #888;
+$primary-color: #28282B;
+$secondary-color: #DDDDDD;
+
+// background img variable for easy updates
+$background-img: './assets/bg.jpg';
 
 * {
   padding: 0;
@@ -10,5 +18,9 @@ $text-color: #fa003f;
 }
 
 body {
-
+  background-image: url($background-img);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }

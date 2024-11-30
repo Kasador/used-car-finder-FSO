@@ -69,7 +69,8 @@ Developer notes for setting up and using Webpack, as well as understanding the f
    - [Webpack Configuration Documentation](https://webpack.js.org/concepts/configuration/)  
    - [StackOverflow: Webpack Configuration](https://stackoverflow.com/questions/39098423/webpack-configuration)  
    - [npm: dotenv](https://www.npmjs.com/package/dotenv)  
-   - [npm: webpack](https://www.npmjs.com/package/webpack)  
+   - [npm: webpack](https://www.npmjs.com/package/webpack)
+   - [Fix: Scripts Running Twice](https://stackoverflow.com/questions/37081559/all-my-code-runs-twice-when-compiled-by-webpack)
 
 ---
 

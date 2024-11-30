@@ -1,5 +1,6 @@
 // Imports your SCSS stylesheet
 // https://stackoverflow.com/questions/52376720/how-to-make-font-awesome-5-work-with-webpack
+// https://stackoverflow.com/questions/37081559/all-my-code-runs-twice-when-compiled-by-webpack
 
 import './style.scss';
 import data from './data.json'

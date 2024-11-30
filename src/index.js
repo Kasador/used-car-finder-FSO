@@ -12,14 +12,28 @@ console.log(carData, 'The car data');
 
 class Main { // Main class
     constructor() {
-        
         this.setInit = false; // start app and use state management
         this.init();
+        this.buildDOM();
     }
 
     init() { // start the application
         this.setInit = true;
         console.log('Application successfully started:', this.setInit);
+    }
+
+    buildDOM() { // build the DOM elements needed for backend appending data from JSON
+        const option = document.createElement('option');
+        option.textContent = "test";
+        option.setAttribute('value', 'testValue');
+
+        const findSelectElement = document.getElementById('year');
+
+        console.log(option);
+        console.log(findSelectElement);
+
+        findSelectElement.append(option);
+        // this.findSelectElement.document.append(option);
     }
 }
 

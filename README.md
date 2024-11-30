@@ -117,3 +117,8 @@ module.exports = {
         open: true,
     },
 };
+```
+
+# ⚙️ Updates 
+
+![Screenshot 2024-11-30 102732](https://github.com/user-attachments/assets/7fc0b20c-63ea-484f-869b-e3f0c44cf960)

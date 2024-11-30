@@ -1,3 +1,8 @@
+<!-- REFERENCES >>>
+  1) html form + input boxes 
+    a) https://www.w3schools.com/tags/tag_select.asp 
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +12,44 @@
 </head>
 <body>
   <header>
-    <h1>Find Your Dream Vehicle</h1>
-    <p>Have you been dreaming about getting a new vehicle? <br> Well, you're in luck.</p>
+    <h1>Find Your Dream Vehicle</h1> <!-- header text -->
+    <p>Have you been dreaming about getting a new vehicle? <br> Well, you're in luck.</p> <!-- paragraph + call-to-action text -->
   </header>
-  <main>
-    <section>
-      <article></article>
-      <article></article>
-      <article></article>
+  <main> <!-- main container for sections and application -->
+    <section> <!-- main section for the three(3) section, "Year", "Make", "Model" -->
+      <article> <!-- year section -->
+        <h1>Year</h1>
+        <label for="year">Year</label>
+
+        <select name="year" id="year">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+      </article>
+      <article> <!-- make section -->
+        <h1>Make</h1>
+        <label for="make">Make</label>
+
+        <select name="make" id="make">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+      </article>
+      <article> <!-- model section -->
+        <h1>Model</h1>
+        <label for="model">Model</label>
+
+        <select name="model" id="model">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+      </article>
     </section>
   </main>
   <script src="bundle.js"></script>

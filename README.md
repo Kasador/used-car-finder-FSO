@@ -34,7 +34,7 @@ Since everything has been setup for you in order to complete this week's assignm
 Running the above command should automatically open up your web browser to a blank white page. You may start coding your project. Any changes you make to your code will automatically be compiled. All you have to do is refresh your browser anytime you make a change. 
 
 ## Project File Structure
-
+```
 .
 ├── dist/                 -> This folder is only used to house your compiled ES6 code for your browser to use.
 │   └── bundle.js         -> The main script that gets compiled from your src/ code and loads it into your browser. 
@@ -47,7 +47,7 @@ Running the above command should automatically open up your web browser to a bla
 │   ├── index.js          -> YOur main ES6 JavaScript file to place all of your code into.
 │   └── style.scss        -> Your primary SCSS stylesheet you will use to place all of your styles into.
 └── webpack.config.js     -> Tells nodejs how to compile your ES6 project.
-
+```
 
 
 Happy coding y'all! Good luck!

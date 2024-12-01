@@ -12,60 +12,94 @@
         e) https://www.w3schools.com/js/js_array_sort.asp#mark_reverse
     4) ES6 if statements 
         a) https://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
+    5) event handling 
+        a) https://stackoverflow.com/questions/36192230/event-not-firing-on-input-change-for-appended-elements
+        b) https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 */
 
-import './style.scss';
+import './style.scss'; // imports >>>
 import data from './data.json'
 
-const carData = new Array(data);
+const carData = new Array(data); // global variables/arrays >>>
+const disableMake = document.querySelector('#make');
+const disableModel = document.querySelector('#model');
 
 console.log(carData, 'The car data');
 console.log(carData[0].length, 'The car data');
 
 class Main { // Main class
     constructor() {
-        this.yearArray = [];
+        this.yearArray = []; // arrays/var - for year, make, model etc
         this.makeArray = [];
         this.moduleArray = [];
+        this.getYearInput = null;
 
-        this.setInit = false; // start app and use state management
+        disableMake.disabled = true; // have other options disabled until user advances
+        disableModel.disabled = true;
+
+        this.setInit = false; // start app & use state management
+        this.setState = 0;
         this.init();
     }
 
     init() { // start the application
         this.setInit = true;
         console.log('Application successfully started:', this.setInit);
-        // this.buildDOM();
+
         this.getYears();
     }
 
     buildDOM() { // build the DOM elements needed for backend appending data from JSON
-        console.log('Dropdown Years Total:',this.yearArray.length);
-        this.yearArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
-            let option = document.createElement('option'); // use array data
-            option.textContent = year;
-            option.setAttribute('value', year);
+        if (!this.setState ) {
+            console.log('DOM >>> Years Appended')
+                console.log('Dropdown Years Total:',this.yearArray.length);
+                this.yearArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
+                let option = document.createElement('option'); // use array data
+                option.textContent = year;
+                option.setAttribute('value', year);
 
-            console.log(option); // see what is made
-            // findSelectElement.document.appendChild(option);
-            const findSelectElement = document.querySelector('#year');
-            // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
-            findSelectElement ? findSelectElement.append(option) : console.error('Element not found.'); // ES6 one-line if statement
-        })
+                console.log(option); // see what is made
+                // findSelectElement.document.appendChild(option);
+                const findYearDropDown = document.querySelector('#year');
+                // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
+                findYearDropDown ? findYearDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
+            });
+        } else {
+            console.log('DOM >>> Make Appended')
 
-        // console.log('Number of Options Made', option.length);
-        // const option = document.createElement('option');
-        // option.textContent = "test";
-        // option.setAttribute('value', 'testValue');
+            disableMake.disabled = false;
+            disableMake.style.cursor = 'default';
 
-        // console.log(option);
-        // console.log(findSelectElement);
+            console.log('DOM >>> Years Appended')
+                console.log('Dropdown Make Total:',this.makeArray.length);
+                this.makeArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
+                let option = document.createElement('option'); // use array data
+                option.textContent = year;
+                option.setAttribute('value', year);
 
-        // findSelectElement.append(option);
-        // this.findSelectElement.document.append(option);
+                console.log(option); // see what is made
+                // findSelectElement.document.appendChild(option);
+                const findYearDropDown = document.querySelector('#year');
+                // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
+                findYearDropDown ? findYearDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
+            });
+        }
     }
 
     getYears() {
+        // test 
+        const findYearDropDown = document.querySelector('#year');
+        findYearDropDown.addEventListener('change', (e) => {
+            console.log(e.target.value, 'event handler fired!');
+            this.getYearInput = e.target.value;
+            console.log("Year Input Stored:", this.getYearInput);
+
+            this.setState = 1;
+            this.setState ? this.getMakes() : getModels();
+
+
+        });
+
         const storeYears = []; // new array for years
         carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
             storeYears.push(items.year); // push all years to the new array made
@@ -86,12 +120,26 @@ class Main { // Main class
         this.buildDOM();
     }
 
+    /* DEVELOPER NOTES: I ended up solving this issue without the internet >>> 
+        Basically, what happened was the combo of appending elements and global scoping, I was trying to attach
+        event handlers from within a method in a method. And by going from main Class > init > getYears, it attached the event
+        handler, and I believe to real issue is due to the fact that I appended elements, and then got the select ele, which
+        was responsive for the event firing. Due to the change and the dynamic nature of OOP, it never got attached. 
+    */
+    // getYearInput() {
+    //     const findYearDropDown = document.querySelector('#year');
+    //     this.value = findYearDropDown.options[findYearDropDown.selectedIndex].value; 
+    //     console.log(this.value)
+    // }
+
     getMakes() {
-        
+        console.log('get makes');
+
+        this.buildDOM();
     }
 
     getModels() {
-        
+        console.log('get models');
     }
 }
 
@@ -148,6 +196,6 @@ class Car extends Model { // Main class
 
 const main = new Main();
 
-const car = new Car(2018, 'BMW', "Model");
+// const car = new Car(2018, 'BMW', "Model");
 
-console.log(car.displaySelectedCar());
+// console.log(car.displaySelectedCar());

@@ -21,7 +21,7 @@
 
 // color scheme >>> variables
 $seleted-color: #68A4B2;      // light red/rose
-$accent-color: #999;          // lightgray
+$accent-color: #999999;          // lightgray
 $primary-color: #28282B;      // matte black
 $secondary-color: #f9f9f9;    // dirty white
 
@@ -44,9 +44,10 @@ body {
   background-size: cover;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  margin-top: 180px;
 }
 
 header {
@@ -69,6 +70,7 @@ p {
 main {
   display: flex;
   justify-content: center;
+
 }
 
 main section {
@@ -101,6 +103,7 @@ label {
   top: 9px;
   left: 8px;
   color: $accent-color;
+  z-index: 10;
 }
 
 .arrow-down { // SVG arrow for dropdown
@@ -108,6 +111,7 @@ label {
   position: absolute;
   transform: translateX(120px) translateY(15px); // move and reposition, top or right/left props dont work with SVG?
   fill: $accent-color;
+  z-index: 1;
 }
 
 select {
@@ -118,14 +122,29 @@ select {
   border: 2px solid $accent-color;
   border-radius: 5px;
   font-size: 0.7rem;
-  color: $primary-color;
+  color: $accent-color;
   appearance: none; // general
   -webkit-appearance: none; // safari / chrome
   -moz-appearance: none; // firefox
+  z-index: 999;
+  cursor: pointer;
+}
+
+select > option {
+  color: $primary-color;
 }
 
 select:focus, select:active {
   // border-radius: none;
   outline: none;
   border-color: $seleted-color;
+}
+
+#make, #model {
+  cursor: not-allowed;
+}
+
+#make:disabled, #model:disabled {
+  cursor: not-allowed;
+  border-color: red;
 }

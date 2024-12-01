@@ -77,3 +77,8 @@ plugins: [
   ```
 
 This is needed due to the fact that it was running my scripts _twice_. One from the index.html script tag with bundle.js and the other with the _HtmlWebpackPlugin_ function. I fixed this by added _inject: false,_ to the plugins array.
+
+# Backend Data for _*years*_ Connected to Frontend
+
+### Screenshot Below >>>
+![Screenshot 2024-12-01 080327](https://github.com/user-attachments/assets/5bc78a88-440e-4e2b-9f6a-2eab62a0ae43)

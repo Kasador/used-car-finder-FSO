@@ -4,8 +4,12 @@
             developer notes: // import '@fortawesome/fontawesome-free/js/solid' just found out I need pro :(
     2) webpack running JS twice 
         a) https://stackoverflow.com/questions/37081559/all-my-code-runs-twice-when-compiled-by-webpack
-    3) sorting + array methods and functions
+    3) array methods + functions
         a) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+        b) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+        c) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+        d) https://builtin.com/software-engineering-perspectives/remove-duplicates-from-array-javascript
+        e) https://www.w3schools.com/js/js_array_sort.asp#mark_reverse
 */
 
 import './style.scss';
@@ -34,11 +38,11 @@ class Main { // Main class
     }
 
     buildDOM() { // build the DOM elements needed for backend appending data from JSON
+        const findSelectElement = document.getElementById('year');
+
         const option = document.createElement('option');
         option.textContent = "test";
         option.setAttribute('value', 'testValue');
-
-        const findSelectElement = document.getElementById('year');
 
         console.log(option);
         console.log(findSelectElement);
@@ -48,13 +52,22 @@ class Main { // Main class
     }
 
     getYears() {
-        const storeYears = [];
-
-        carData[0].forEach(items => {
-            storeYears.push(items.year);
+        const storeYears = []; // new array for years
+        carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
+            storeYears.push(items.year); // push all years to the new array made
         });
 
-        console.log(storeYears, "the years");
+        storeYears.sort(); // sort the new years array, so they are in order and not random
+        console.log(storeYears, "Years Sorted");
+
+        const filterYears = [...new Set(storeYears)]; // make a new array, take the sorted array, filter and take out all repeated years
+        console.log(filterYears, "Years Filtered");
+
+        filterYears.reverse(); // once sorted, filtered, reverse the array so the highest year is at index value 0, not the last
+        console.log(filterYears, "Years Reversed");
+
+        this.yearArray = filterYears; // finally, store the result of years into the instance array for use
+        console.log(this.yearArray, "Years Ready For Use!");
     }
 
     getMakes() {

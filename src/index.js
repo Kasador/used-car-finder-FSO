@@ -14,6 +14,9 @@
         g) https://stackoverflow.com/questions/39275193/how-to-check-if-object-has-property-javascript
         h) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
         i) https://stackoverflow.com/questions/16312528/check-if-an-array-contains-any-element-of-another-array-in-javascript
+        j) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
+        k) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+        l) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
     4) ES6 if statements 
         a) https://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
     5) event handling 
@@ -174,20 +177,25 @@ class Main { // Main class
             }
         });
 
-        const storeMakes = []; // new array for years
-        carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
-            storeMakes.push(items.Manufacturer); // push all years to the new array made
-        });
+        const storeMakes = [...new Set(data.filter((car) => car.year == this.getYearInput))]; // new array for make
+        // carData[0].forEach(items => { // find the make in the carData JSON (the main JSON)
+        //     storeMakes.push(items.Manufacturer); // push all make to the new array made
+        // });
 
-        try { // getting stackoverflow, destroying my memory + broswer crashing
-            storeMakes.sort(); // sort the new years array, so they are in order and not random
-            console.log(storeMakes, "Makes Sorted");
-        } catch (error) {
-            console.error("Something went wrong!", error);
-        }
+        // try { // getting stackoverflow, destroying my memory + broswer crashing
+        //     storeMakes.sort(); // sort the new makes array, so they are in order and not random
+        //     console.log(storeMakes, "Makes Sorted");
+        // } catch (error) {
+        //     console.error("Something went wrong!", error);
+        // }
 
-        const filterMakes = [...new Set(storeMakes)]; // make a new array, take the sorted array, filter and take out all repeated makes
-        console.log(filterMakes, "Makes Filtered");
+        // const makesByYear = Array.from(new Set(data.filter((car) => car.year == storeMakes)));
+
+        const filterMakes = [...new Set(storeMakes.filter((car) => car.year == this.getYearInput))]; // make a new array, take the sorted array, filter and take out all repeated makes
+
+        // this.makeArray = storeMakes.forEach(make => {
+        //     return make.
+        // });
 
         // if (carData.hasOwnProperty('year')) {
         //     console.log('Has the year:', true)
@@ -200,7 +208,7 @@ class Main { // Main class
 
         // checkYearAva(carData, this.yearArray);
 
-        this.makeArray = filterMakes;
+        // this.makeArray = filterMakes;
         // this.makeArray = storeMakes; // finally, store the result of years into the instance array for use
         console.log(this.makeArray, "Makes Ready For Use!");
 
@@ -210,11 +218,31 @@ class Main { // Main class
     getModels() {
         console.log('Fetch Models');
 
+        const findModelDropDown = document.querySelector('#model'); // event handler
+        findModelDropDown.addEventListener('change', (e) => {
+            // console.log(e.target.value, 'event handler fired!');
+            this.getModelInput = e.target.value;
+            console.log("Model Input Stored:", this.getModelInput);
+
+            this.setState = 3;
+            // this.setState ? this.getMakes() : this.getYears();
+            if (this.setState === 3) {
+                // this.getModels();
+                // doo stuff
+            }
+        });
+
+        const storeModels = [...new Set(data.filter((car) => car.year == this.getYearInput))];
+        // carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
+        //     storeModels.push(items.Manufacturer); // push all years to the new array made
+        // });
+        console.log(storeModels, 'models');
+
         this.buildDOM();
     }
 }
 
-class Year { // Main class
+class Year { // Year class
     constructor(year) {
         this.year = year;
     }
@@ -224,7 +252,7 @@ class Year { // Main class
     }
 }
 
-class Make extends Year { // Main class
+class Make extends Year { // Make class
     constructor(year, make) {
         super(year);
         this.make = make
@@ -238,7 +266,7 @@ class Make extends Year { // Main class
     }
 }
 
-class Model extends Make { // Main class
+class Model extends Make { // Model class
     constructor(year, make, model) {
         super(year, make);
         this.model = model;
@@ -252,7 +280,7 @@ class Model extends Make { // Main class
     }
 }
 
-class Car extends Model { // Main class
+class Car extends Model { // Car class
     constructor(year, make, model) {
         super(year, make, model);
     }

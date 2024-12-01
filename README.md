@@ -145,3 +145,9 @@ This is needed due to the fact that it was running my scripts _twice_. One from 
 
 ### Screenshot Below >>>
 ![Screenshot 2024-12-01 080327](https://github.com/user-attachments/assets/5bc78a88-440e-4e2b-9f6a-2eab62a0ae43)
+
+# Backend Data **Connected** to Frontend
+
+### Screenshot Below >>>
+![Screenshot 2024-12-01 155532](https://github.com/user-attachments/assets/17335ca2-d6da-4848-94d6-694e29e175a4)
+![Screenshot 2024-12-01 155544](https://github.com/user-attachments/assets/e4c5368d-349e-457b-8df4-d400f4c4bf86)

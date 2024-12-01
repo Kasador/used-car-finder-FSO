@@ -4,12 +4,14 @@
             developer notes: // import '@fortawesome/fontawesome-free/js/solid' just found out I need pro :(
     2) webpack running JS twice 
         a) https://stackoverflow.com/questions/37081559/all-my-code-runs-twice-when-compiled-by-webpack
-    3) array methods + functions
+    3) array methods + functions (Wow, ES6 is amazing...)
         a) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
         b) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
         c) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
         d) https://builtin.com/software-engineering-perspectives/remove-duplicates-from-array-javascript
         e) https://www.w3schools.com/js/js_array_sort.asp#mark_reverse
+    4) ES6 if statements 
+        a) https://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
 */
 
 import './style.scss';
@@ -38,16 +40,28 @@ class Main { // Main class
     }
 
     buildDOM() { // build the DOM elements needed for backend appending data from JSON
-        const findSelectElement = document.getElementById('year');
+        console.log('Dropdown Years Total:',this.yearArray.length);
+        this.yearArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
+            let option = document.createElement('option'); // use array data
+            option.textContent = year;
+            option.setAttribute('value', year);
 
-        const option = document.createElement('option');
-        option.textContent = "test";
-        option.setAttribute('value', 'testValue');
+            console.log(option); // see what is made
+            // findSelectElement.document.appendChild(option);
+            const findSelectElement = document.querySelector('#year');
+            // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
+            findSelectElement ? findSelectElement.append(option) : console.error('Element not found.'); // ES6 one-line if statement
+        })
 
-        console.log(option);
-        console.log(findSelectElement);
+        // console.log('Number of Options Made', option.length);
+        // const option = document.createElement('option');
+        // option.textContent = "test";
+        // option.setAttribute('value', 'testValue');
 
-        findSelectElement.append(option);
+        // console.log(option);
+        // console.log(findSelectElement);
+
+        // findSelectElement.append(option);
         // this.findSelectElement.document.append(option);
     }
 
@@ -68,6 +82,8 @@ class Main { // Main class
 
         this.yearArray = filterYears; // finally, store the result of years into the instance array for use
         console.log(this.yearArray, "Years Ready For Use!");
+
+        this.buildDOM();
     }
 
     getMakes() {

@@ -1,67 +1,153 @@
-// Imports your SCSS stylesheet
-// https://stackoverflow.com/questions/52376720/how-to-make-font-awesome-5-work-with-webpack
-// https://stackoverflow.com/questions/37081559/all-my-code-runs-twice-when-compiled-by-webpack
+/* REFERENCES >>>
+    1) font awesome + webpack
+        a) https://stackoverflow.com/questions/52376720/how-to-make-font-awesome-5-work-with-webpack
+            developer notes: // import '@fortawesome/fontawesome-free/js/solid' just found out I need pro :(
+    2) webpack running JS twice 
+        a) https://stackoverflow.com/questions/37081559/all-my-code-runs-twice-when-compiled-by-webpack
+    3) array methods + functions (Wow, ES6 is amazing...)
+        a) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+        b) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+        c) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+        d) https://builtin.com/software-engineering-perspectives/remove-duplicates-from-array-javascript
+        e) https://www.w3schools.com/js/js_array_sort.asp#mark_reverse
+    4) ES6 if statements 
+        a) https://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
+*/
 
 import './style.scss';
 import data from './data.json'
-// import '@fortawesome/fontawesome-free/js/solid' just found out I need pro :(
 
 const carData = new Array(data);
 
 console.log(carData, 'The car data');
+console.log(carData[0].length, 'The car data');
 
 class Main { // Main class
     constructor() {
+        this.yearArray = [];
+        this.makeArray = [];
+        this.moduleArray = [];
+
         this.setInit = false; // start app and use state management
         this.init();
-        this.buildDOM();
     }
 
     init() { // start the application
         this.setInit = true;
         console.log('Application successfully started:', this.setInit);
+        // this.buildDOM();
+        this.getYears();
     }
 
     buildDOM() { // build the DOM elements needed for backend appending data from JSON
-        const option = document.createElement('option');
-        option.textContent = "test";
-        option.setAttribute('value', 'testValue');
+        console.log('Dropdown Years Total:',this.yearArray.length);
+        this.yearArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
+            let option = document.createElement('option'); // use array data
+            option.textContent = year;
+            option.setAttribute('value', year);
 
-        const findSelectElement = document.getElementById('year');
+            console.log(option); // see what is made
+            // findSelectElement.document.appendChild(option);
+            const findSelectElement = document.querySelector('#year');
+            // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
+            findSelectElement ? findSelectElement.append(option) : console.error('Element not found.'); // ES6 one-line if statement
+        })
 
-        console.log(option);
-        console.log(findSelectElement);
+        // console.log('Number of Options Made', option.length);
+        // const option = document.createElement('option');
+        // option.textContent = "test";
+        // option.setAttribute('value', 'testValue');
 
-        findSelectElement.append(option);
+        // console.log(option);
+        // console.log(findSelectElement);
+
+        // findSelectElement.append(option);
         // this.findSelectElement.document.append(option);
     }
-}
 
-class Car { // Main class
-    constructor(year, make, model) {
-        this.year = year;
-        this.make = make;
-        this.model = model;
+    getYears() {
+        const storeYears = []; // new array for years
+        carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
+            storeYears.push(items.year); // push all years to the new array made
+        });
+
+        storeYears.sort(); // sort the new years array, so they are in order and not random
+        console.log(storeYears, "Years Sorted");
+
+        const filterYears = [...new Set(storeYears)]; // make a new array, take the sorted array, filter and take out all repeated years
+        console.log(filterYears, "Years Filtered");
+
+        filterYears.reverse(); // once sorted, filtered, reverse the array so the highest year is at index value 0, not the last
+        console.log(filterYears, "Years Reversed");
+
+        this.yearArray = filterYears; // finally, store the result of years into the instance array for use
+        console.log(this.yearArray, "Years Ready For Use!");
+
+        this.buildDOM();
+    }
+
+    getMakes() {
+        
+    }
+
+    getModels() {
+        
     }
 }
 
-class Year extends Car { // Main class
-    constructor(year, make, model) {
+class Year { // Main class
+    constructor(year) {
+        this.year = year;
+    }
+
+    getYear() {
+
+    }
+}
+
+class Make extends Year { // Main class
+    constructor(year, make) {
         super(year);
         this.make = make
     }
-}
 
-class Make extends Car { // Main class
-    constructor() {
-
+    getMake() {
+        console.log("Year");
+        // carData[0].forEach(year => {
+        //     console.log(year, "the years");
+        // })
     }
 }
 
-class Model extends Car { // Main class
-    constructor() {
+class Model extends Make { // Main class
+    constructor(year, make, model) {
+        super(year, make);
+        this.model = model;
+    }
 
+    getModel() {
+        console.log("Made");
+        // carData[0].forEach(year => {
+        //     console.log(year, "the years");
+        // })
+    }
+}
+
+class Car extends Model { // Main class
+    constructor(year, make, model) {
+        super(year, make, model);
+    }
+
+    displaySelectedCar() {
+        console.log(`The year is ${this.year} and the make is ${this.make} and finally the model is ${this.model}.`)
+        // carData[0].forEach(year => {
+        //     console.log(year, "the years");
+        // })
     }
 }
 
 const main = new Main();
+
+const car = new Car(2018, 'BMW', "Model");
+
+console.log(car.displaySelectedCar());

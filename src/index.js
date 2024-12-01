@@ -10,6 +10,10 @@
         c) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
         d) https://builtin.com/software-engineering-perspectives/remove-duplicates-from-array-javascript
         e) https://www.w3schools.com/js/js_array_sort.asp#mark_reverse
+        f) https://stackoverflow.com/questions/52461095/sort-an-array-of-objects-if-property-exists
+        g) https://stackoverflow.com/questions/39275193/how-to-check-if-object-has-property-javascript
+        h) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
+        i) https://stackoverflow.com/questions/16312528/check-if-an-array-contains-any-element-of-another-array-in-javascript
     4) ES6 if statements 
         a) https://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
     5) event handling 
@@ -32,7 +36,10 @@ class Main { // Main class
         this.yearArray = []; // arrays/var - for year, make, model etc
         this.makeArray = [];
         this.moduleArray = [];
+
         this.getYearInput = null;
+        this.getMakeInput = null;
+        this.getModelInput = null;
 
         disableMake.disabled = true; // have other options disabled until user advances
         disableModel.disabled = true;
@@ -50,7 +57,7 @@ class Main { // Main class
     }
 
     buildDOM() { // build the DOM elements needed for backend appending data from JSON
-        if (!this.setState ) {
+        if (this.setState === 0) {
             console.log('DOM >>> Years Appended')
                 console.log('Dropdown Years Total:',this.yearArray.length);
                 this.yearArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
@@ -64,40 +71,59 @@ class Main { // Main class
                 // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
                 findYearDropDown ? findYearDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
             });
-        } else {
+        } else if (this.setState === 1) {
             console.log('DOM >>> Make Appended')
 
             disableMake.disabled = false;
-            disableMake.style.cursor = 'default';
+            disableMake.style.cursor = 'pointer';
 
-            console.log('DOM >>> Years Appended')
                 console.log('Dropdown Make Total:',this.makeArray.length);
-                this.makeArray.forEach(year => { // loop thru array and make options for the select HTML element with the ID
+                this.makeArray.forEach(make => { // loop thru array and make options for the select HTML element with the ID
                 let option = document.createElement('option'); // use array data
-                option.textContent = year;
-                option.setAttribute('value', year);
+                option.textContent = make;
+                option.setAttribute('value', make);
 
                 console.log(option); // see what is made
                 // findSelectElement.document.appendChild(option);
-                const findYearDropDown = document.querySelector('#year');
+                const findMakeDropDown = document.querySelector('#make');
                 // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
-                findYearDropDown ? findYearDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
+                findMakeDropDown ? findMakeDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
+            });
+        } else {
+            console.log('DOM >>> Model Appended')
+
+            disableModel.disabled = false;
+            disableModel.style.cursor = 'pointer';
+
+            console.log('Dropdown Make Total:',this.makeArray.length);
+                this.makeArray.forEach(model => { // loop thru array and make options for the select HTML element with the ID
+                let option = document.createElement('option'); // use array data
+                option.textContent = model;
+                option.setAttribute('value', model);
+
+                console.log(option); // see what is made
+                // findSelectElement.document.appendChild(option);
+                const findModelDropDown = document.querySelector('#model');
+                // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
+                findModelDropDown ? findModelDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
             });
         }
     }
 
     getYears() {
-        // test 
-        const findYearDropDown = document.querySelector('#year');
+        console.log('Fetch Years');
+
+        const findYearDropDown = document.querySelector('#year'); // event handler
         findYearDropDown.addEventListener('change', (e) => {
-            console.log(e.target.value, 'event handler fired!');
+            // console.log(e.target.value, 'event handler fired!');
             this.getYearInput = e.target.value;
             console.log("Year Input Stored:", this.getYearInput);
 
             this.setState = 1;
-            this.setState ? this.getMakes() : getModels();
-
-
+            // this.setState ? this.getMakes() : this.getYears();
+            if (this.setState === 1) {
+                this.getMakes()
+            }
         });
 
         const storeYears = []; // new array for years
@@ -133,13 +159,58 @@ class Main { // Main class
     // }
 
     getMakes() {
-        console.log('get makes');
+        console.log('Fetch Makes');
+
+        const findMakeDropDown = document.querySelector('#make'); // event handler
+        findMakeDropDown.addEventListener('change', (e) => {
+            // console.log(e.target.value, 'event handler fired!');
+            this.getMakeInput = e.target.value;
+            console.log("Make Input Stored:", this.getMakeInput);
+
+            this.setState = 2;
+            // this.setState ? this.getMakes() : this.getYears();
+            if (this.setState === 2) {
+                this.getModels();
+            }
+        });
+
+        const storeMakes = []; // new array for years
+        carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
+            storeMakes.push(items.Manufacturer); // push all years to the new array made
+        });
+
+        try { // getting stackoverflow, destroying my memory + broswer crashing
+            storeMakes.sort(); // sort the new years array, so they are in order and not random
+            console.log(storeMakes, "Makes Sorted");
+        } catch (error) {
+            console.error("Something went wrong!", error);
+        }
+
+        const filterMakes = [...new Set(storeMakes)]; // make a new array, take the sorted array, filter and take out all repeated makes
+        console.log(filterMakes, "Makes Filtered");
+
+        // if (carData.hasOwnProperty('year')) {
+        //     console.log('Has the year:', true)
+        // } else {
+        //     console.log('Does not have the year:', false)
+        // }
+        // const checkYearAva = (haystack, arr) => {
+        //     return (arr.every(v => haystack.includes(v)))
+        // }
+
+        // checkYearAva(carData, this.yearArray);
+
+        this.makeArray = filterMakes;
+        // this.makeArray = storeMakes; // finally, store the result of years into the instance array for use
+        console.log(this.makeArray, "Makes Ready For Use!");
 
         this.buildDOM();
     }
 
     getModels() {
-        console.log('get models');
+        console.log('Fetch Models');
+
+        this.buildDOM();
     }
 }
 

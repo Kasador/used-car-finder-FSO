@@ -38,7 +38,7 @@ class Main { // Main class
     constructor() {
         this.yearArray = []; // arrays/var - for year, make, model etc
         this.makeArray = [];
-        this.moduleArray = [];
+        this.modelArray = [];
 
         this.getYearInput = null;
         this.getMakeInput = null;
@@ -92,14 +92,14 @@ class Main { // Main class
                 // if (findSelectElement) { findSelectElement.append(option) } using ES6 methods 
                 findMakeDropDown ? findMakeDropDown.append(option) : console.error('Element not found.'); // ES6 one-line if statement
             });
-        } else {
+        } else if (this.setState == 2) {
             console.log('DOM >>> Model Appended')
 
             disableModel.disabled = false;
             disableModel.style.cursor = 'pointer';
 
-            console.log('Dropdown Make Total:',this.makeArray.length);
-                this.makeArray.forEach(model => { // loop thru array and make options for the select HTML element with the ID
+            console.log('Dropdown Models Total:',this.modelArray.length);
+                this.modelArray.forEach(model => { // loop thru array and make options for the select HTML element with the ID
                 let option = document.createElement('option'); // use array data
                 option.textContent = model;
                 option.setAttribute('value', model);
@@ -117,6 +117,7 @@ class Main { // Main class
         console.log('Fetch Years');
 
         const findYearDropDown = document.querySelector('#year'); // event handler
+        const findMakeDropDown = document.querySelector('#make');
         findYearDropDown.addEventListener('change', (e) => {
             // console.log(e.target.value, 'event handler fired!');
             this.getYearInput = e.target.value;
@@ -125,7 +126,8 @@ class Main { // Main class
             this.setState = 1;
             // this.setState ? this.getMakes() : this.getYears();
             if (this.setState === 1) {
-                this.getMakes()
+                findMakeDropDown.innerHTML = '<option value="select-a-make">select a make</option>';
+                this.getMakes();
             }
         });
 
@@ -135,13 +137,13 @@ class Main { // Main class
         });
 
         storeYears.sort(); // sort the new years array, so they are in order and not random
-        console.log(storeYears, "Years Sorted");
+        // console.log(storeYears, "Years Sorted");
 
         const filterYears = [...new Set(storeYears)]; // make a new array, take the sorted array, filter and take out all repeated years
-        console.log(filterYears, "Years Filtered");
+        // console.log(filterYears, "Years Filtered");
 
         filterYears.reverse(); // once sorted, filtered, reverse the array so the highest year is at index value 0, not the last
-        console.log(filterYears, "Years Reversed");
+        // console.log(filterYears, "Years Reversed");
 
         this.yearArray = filterYears; // finally, store the result of years into the instance array for use
         console.log(this.yearArray, "Years Ready For Use!");
@@ -165,6 +167,7 @@ class Main { // Main class
         console.log('Fetch Makes');
 
         const findMakeDropDown = document.querySelector('#make'); // event handler
+        const findModelDropDown = document.querySelector('#model');
         findMakeDropDown.addEventListener('change', (e) => {
             // console.log(e.target.value, 'event handler fired!');
             this.getMakeInput = e.target.value;
@@ -173,43 +176,25 @@ class Main { // Main class
             this.setState = 2;
             // this.setState ? this.getMakes() : this.getYears();
             if (this.setState === 2) {
+                findModelDropDown.innerHTML = '<option value="select-a-model">select a model</option>';
                 this.getModels();
             }
         });
 
-        const storeMakes = [...new Set(data.filter((car) => car.year == this.getYearInput))]; // new array for make
-        // carData[0].forEach(items => { // find the make in the carData JSON (the main JSON)
-        //     storeMakes.push(items.Manufacturer); // push all make to the new array made
-        // });
+        const filterMakesByYear = [...new Set(data.filter((car) => car.year == this.getYearInput))]; // new array for make
 
-        // try { // getting stackoverflow, destroying my memory + broswer crashing
-        //     storeMakes.sort(); // sort the new makes array, so they are in order and not random
-        //     console.log(storeMakes, "Makes Sorted");
-        // } catch (error) {
-        //     console.error("Something went wrong!", error);
-        // }
+        const storeMakes = [];
+        filterMakesByYear.forEach(items => { // find in the carData JSON (the main JSON)
+            storeMakes.push(items.Manufacturer); // push all makes that are filtered to the new array made
+        });
 
-        // const makesByYear = Array.from(new Set(data.filter((car) => car.year == storeMakes)));
+        storeMakes.sort(); // sort the new years array, so they are in order and not random
+        // console.log(storeMakes, "Makes Sorted");
 
-        const filterMakes = [...new Set(storeMakes.filter((car) => car.year == this.getYearInput))]; // make a new array, take the sorted array, filter and take out all repeated makes
+        const noRepeatMakes = [...new Set(storeMakes)]; // make a new array, take the sorted array, filter and take out all repeated 
+        // console.log(noRepeatMakes, "Makes Filtered");
 
-        // this.makeArray = storeMakes.forEach(make => {
-        //     return make.
-        // });
-
-        // if (carData.hasOwnProperty('year')) {
-        //     console.log('Has the year:', true)
-        // } else {
-        //     console.log('Does not have the year:', false)
-        // }
-        // const checkYearAva = (haystack, arr) => {
-        //     return (arr.every(v => haystack.includes(v)))
-        // }
-
-        // checkYearAva(carData, this.yearArray);
-
-        // this.makeArray = filterMakes;
-        // this.makeArray = storeMakes; // finally, store the result of years into the instance array for use
+        this.makeArray = noRepeatMakes;
         console.log(this.makeArray, "Makes Ready For Use!");
 
         this.buildDOM();
@@ -227,16 +212,26 @@ class Main { // Main class
             this.setState = 3;
             // this.setState ? this.getMakes() : this.getYears();
             if (this.setState === 3) {
-                // this.getModels();
                 // doo stuff
             }
         });
 
-        const storeModels = [...new Set(data.filter((car) => car.year == this.getYearInput))];
-        // carData[0].forEach(items => { // find the years in the carData JSON (the main JSON)
-        //     storeModels.push(items.Manufacturer); // push all years to the new array made
-        // });
-        console.log(storeModels, 'models');
+        const storeModels = [];
+        const filterModelsByYear = Array.from(new Set(data.filter((car) => car.year == this.getYearInput))); // new array for make
+        const filterModelsByMakes = [...new Set(filterModelsByYear.filter((car) => car.Manufacturer == this.getMakeInput))];
+        // console.log('test', filterModelsByMakes)
+        filterModelsByMakes.forEach(items => { // find in the carData JSON (the main JSON)
+            storeModels.push(items.model); // push all Models that are filtered to the new array made
+        });
+
+        storeModels.sort(); // sort 
+        // console.log(storeModels, "Models Sorted");
+
+        const noRepeatModels = [...new Set(storeModels)]; // models a new array, take the sorted array, filter and take out all
+        // console.log(noRepeatModels, "Models Filtered");
+
+        this.modelArray = noRepeatModels;
+        console.log(this.modelArray, "Models Ready For Use!");
 
         this.buildDOM();
     }

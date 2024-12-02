@@ -56,6 +56,15 @@ class Main { // Main class
         this.setInit = true;
         console.log('Application successfully started:', this.setInit);
 
+        const exitDevMode = document.querySelector('#exit-dev-mode');
+        const exitDevViewer = document.querySelector('#results-section');
+        exitDevMode.addEventListener('click', () => {
+            // console.log('clicked')
+            exitDevMode.style.display = 'none';
+            exitDevViewer.style.display = 'none';
+
+        })
+
         this.getYears();
     }
 
@@ -212,7 +221,8 @@ class Main { // Main class
             this.setState = 3;
             // this.setState ? this.getMakes() : this.getYears();
             if (this.setState === 3) {
-                // doo stuff
+                const car = new Car(this.getYearInput, this.getMakeInput, this.getModelInput);
+                car.displaySelectedCar();
             }
         });
 
@@ -240,10 +250,7 @@ class Main { // Main class
 class Year { // Year class
     constructor(year) {
         this.year = year;
-    }
-
-    getYear() {
-
+        this.finalArray = [];
     }
 }
 
@@ -252,26 +259,12 @@ class Make extends Year { // Make class
         super(year);
         this.make = make
     }
-
-    getMake() {
-        console.log("Year");
-        // carData[0].forEach(year => {
-        //     console.log(year, "the years");
-        // })
-    }
 }
 
 class Model extends Make { // Model class
     constructor(year, make, model) {
         super(year, make);
         this.model = model;
-    }
-
-    getModel() {
-        console.log("Made");
-        // carData[0].forEach(year => {
-        //     console.log(year, "the years");
-        // })
     }
 }
 
@@ -281,10 +274,33 @@ class Car extends Model { // Car class
     }
 
     displaySelectedCar() {
-        console.log(`The year is ${this.year} and the make is ${this.make} and finally the model is ${this.model}.`)
-        // carData[0].forEach(year => {
-        //     console.log(year, "the years");
-        // })
+        const filterFinalByYear = Array.from(new Set(data.filter((car) => car.year == this.year)));
+        const filterFinalByMakes = Array.from(new Set(filterFinalByYear.filter((car) => car.Manufacturer == this.make)));
+        const filterFinalByModel = [...new Set(filterFinalByMakes.filter((car) => car.model == this.model))];
+
+        filterFinalByModel.sort();
+        this.finalArray = filterFinalByModel;
+        let length = this.finalArray.length;
+
+        this.displayList();
+    }
+
+    displayList() {
+        console.log('Results', this.finalArray);
+        const list = document.querySelector('#list-results');
+        list.innerHTML = '<li><h3>Results Listed Here - Dev Mode<h3></li>';
+
+        this.finalArray.map(item => { // loop thru array and make options for the select HTML element with the ID
+            let li = document.createElement('li'); // use array data
+            li.textContent = `Price: $${item.price}    | Transmission: ${item.transmission}    | Mileage: ${item.mileage}`;
+            // li.setAttribute('', year);
+
+            // console.log(li);
+
+            list ? list.append(li) : console.error('Element not found.'); // ES6 one-line if statement
+        });
+
+        console.log(`You searched for a ${this.year} ${this.make}, ${this.model}. Good choice!`);
     }
 }
 
